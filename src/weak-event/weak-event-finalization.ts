@@ -1,4 +1,4 @@
-import { ITypedEvent, TypedEventHandler } from '@/typed-event-interfaces';
+import { ITypedEvent, TypedEventHandler } from '../typed-event-interfaces';
 
 type FinalizableEventHandlerRef = { eventSource: ITypedEvent<unknown, unknown>, handler: TypedEventHandler<unknown, unknown> }
 

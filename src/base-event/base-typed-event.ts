@@ -1,4 +1,4 @@
-import { ITypedEvent, TypedEventHandler } from '@/typed-event-interfaces';
+import { ITypedEvent, TypedEventHandler } from '../typed-event-interfaces';
 
 export type EventInvocationOpts = {
 	swallowExceptions: boolean;

@@ -1,7 +1,6 @@
-import { BaseTypedEvent } from '@/base-event/base-typed-event';
+import { BaseTypedEvent } from '../base-event/base-typed-event';
 import { TypedEventHandler } from '@/typed-event-interfaces';
 import { createWeakEventHandler, unregisterWeakEventHandler } from './weak-event-finalization';
-
 
 export class TypedWeakEvent<TSender, TArgs> extends BaseTypedEvent<TSender, TArgs> {
 
