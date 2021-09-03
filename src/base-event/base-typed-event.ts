@@ -1,14 +1,18 @@
 import { ITypedEvent, TypedEventHandler } from '../typed-event-interfaces';
 
 export type EventInvocationOpts = {
-	swallowExceptions: boolean;
+	swallowExceptions?: boolean;
+	parallelize?: boolean;
 };
 
 const DEFAULT_INVOCATION_OPTS: EventInvocationOpts = {
-	swallowExceptions: true
+	swallowExceptions: false,
+	parallelize: true
 };
 
-export abstract class BaseTypedEvent<TSender, TArgs> implements ITypedEvent<TSender, TArgs> {
+type InvocationResult = { succeeded: boolean, error?: unknown };
+
+export class TypedEvent<TSender, TArgs> implements ITypedEvent<TSender, TArgs> {
 
 	protected _handlers: Set<TypedEventHandler<TSender, TArgs>> = new Set<TypedEventHandler<TSender, TArgs>>();
 
@@ -20,24 +24,55 @@ export abstract class BaseTypedEvent<TSender, TArgs> implements ITypedEvent<TSen
 		this._handlers.delete(handler);
 	}
 
-	public async invokeAsync(sender: TSender, args: TArgs, options: EventInvocationOpts = DEFAULT_INVOCATION_OPTS): Promise<void> {
+	public invoke(sender: TSender, args: TArgs, options: EventInvocationOpts = DEFAULT_INVOCATION_OPTS): void {
 		for (const handler of this._handlers) {
-			this.tryInvokeInternal(handler, sender, args).catch((err) => {
-				console.error(`[TypedEvent.invokeAsync_Catch] Faulted during invocation of an event handler. Error: ${err}`);
-				if (options.swallowExceptions === false) {
-					throw err;
-				}
-			});
+			const { succeeded, error } = this.tryInvokeInternal(handler, sender, args);
+			if (!succeeded && options.swallowExceptions === false) {
+					throw error;
+			}
 		}
 	}
 
-	private async tryInvokeInternal(handler: TypedEventHandler<TSender, TArgs>, sender: TSender, args: TArgs): Promise<boolean> {
+	public async invokeAsync(sender: TSender, args: TArgs, options: EventInvocationOpts = DEFAULT_INVOCATION_OPTS): Promise<void> {
+		for (const handler of this._handlers) {
+			if (options?.parallelize === false) {
+				// If 'parallelize' is explicitly false, invoke the handlers one by one
+				// eslint-disable-next-line no-await-in-loop
+				const { succeeded, error } = this.tryInvokeInternal(handler, sender, args);
+				if (!succeeded && options.swallowExceptions === false) {
+					throw error;
+			}
+			} else {
+				// Otherwise, invoke them asynchronously and stop on failure (if required)
+				this.tryAsyncInvokeInternal(handler, sender, args).catch((err) => {
+					if (options.swallowExceptions === false) {
+						throw err;
+					}
+				});
+			}
+		}
+	}
+
+	private tryInvokeInternal(handler: TypedEventHandler<TSender, TArgs>, sender: TSender, args: TArgs): InvocationResult {
+		try {
+			handler(sender, args);
+			return { succeeded: true };
+		} catch (error) {
+			return { error, succeeded: false };
+		}
+	}
+
+	private async tryAsyncInvokeInternal(
+		handler: TypedEventHandler<TSender, TArgs>,
+		sender: TSender,
+		args: TArgs
+	): Promise<InvocationResult> {
+
 		try {
 			await handler(sender, args);
-			return true;
-		} catch (err) {
-			console.error(`[TypedEvent.tryInvokeInternal] Failed during invocation of event handler - ${err}`);
-			return false;
+			return { succeeded: true };
+		} catch (error) {
+			return { error, succeeded: false };
 		}
 	}
 }
