@@ -9,11 +9,13 @@ This package seeks to allow for lightweight, zero dependency, easy to use C#-sty
 The package is quite similar to [strongly-typed-events](https://github.com/KeesCBakker/Strongly-Typed-Events-for-TypeScript) but is significantly
 smaller and less featured.
 
-It does however support `TypedWeakEvent`s that transpile on ES20201 and require NodeJS 14.6+ or an updated, modern browser due to
+It does however support `WeakEvent`s that transpile on ES20201 and require NodeJS 14.6+ or an updated, modern browser due to
 the use of [FinalizationRegistry](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry)
 
-`TypedWeakEvent` are useful when object lifecycles cannot be guaranteed or controlled. This tends to happen in collaborative/enterprise scenarios where several developers may create or consume events or entities without fully understanding their lifecycles and exceptionals or the code's ecosystem.
+`WeakEvent` are useful when object lifecycles cannot be guaranteed or controlled. This tends to happen in collaborative/enterprise scenarios where several developers may create or consume events or entities without fully understanding their lifecycles and exceptionals or the code's ecosystem.
 Usage of weak references in such cases may help prevent hard to detect event handler leaks which are some of the most common ones.
+
+<br />
 
 ### Typed Event
 
@@ -42,7 +44,8 @@ class DummyEventSource {
 	private async raiseEventAsynchronously(): Promise<void> {
 		this._someEvent.invokeAsync(this, 'Some value');
 
-		// We get here as soon as the 'invokeAsync' method yields. Events are invoked asynchronously
+		// We get here as soon as the 'invokeAsync' method yields.
+		// Events are invoked asynchronously.
 		console.log('Done!');
 	}
 }
@@ -71,7 +74,7 @@ class DummyEventConsumer {
 
 
 ```
-
+<br />
 
 ### Weak Event
 
