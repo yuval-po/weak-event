@@ -26,7 +26,8 @@ class DummyEventSource {
 	private async raiseEventAsynchronously(): Promise<void> {
 		this._someEvent.invokeAsync(this, 'Some value');
 
-		// We get here as soon as the 'invokeAsync' method yields. Events are invoked asynchronously
+		// We get here as soon as the 'invokeAsync' method yields.
+		// Events are invoked asynchronously.
 		console.log('Done!');
 	}
 }
