@@ -1,0 +1,39 @@
+{
+	"compilerOptions": {
+		"target": "esnext",
+		"module": "umd",
+		"strict": true,
+		"jsx": "preserve",
+		"importHelpers": true,
+		"moduleResolution": "node",
+		"experimentalDecorators": true,
+		"skipLibCheck": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"strictPropertyInitialization": false,
+		"sourceMap": true,
+		"baseUrl": ".",
+		"types": [
+			"mocha",
+			"chai"
+		],
+		"paths": {
+			"@/*": [
+				"src/*"
+			]
+		},
+		"lib": [
+			"esnext",
+			"dom",
+			"dom.iterable",
+			"scripthost"
+		]
+	},
+	"include": [
+		"src/**/*.ts",
+		"tests/**/*.ts",
+	],
+	"exclude": [
+		"node_modules"
+	]
+}
