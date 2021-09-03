@@ -1,22 +1,24 @@
 
+const path = require('path');
+
 module.exports = {
-	mode: "development",
-	devtool: "inline-source-map",
-	entry: "./src/index.ts",
+	mode: 'development',
+	devtool: 'inline-source-map',
+	entry: './src/index.ts',
 	output: {
-		path: require('path').resolve(__dirname, 'dist'),
-		filename: "ts-events",
+		path: path.resolve(__dirname, 'dist'),
+		filename: 'ts-events',
 		library: {
-			name: "tsEvents",
-			type: "umd"
+			name: 'tsEvents',
+			type: 'umd'
 		}
 	},
 	resolve: {
-		extensions: [".ts", ".js"]
+		extensions: ['.ts', '.js']
 	},
 	module: {
 		rules: [
-			{ test: /\.ts$/, loader: "ts-loader" }
+			{ test: /\.ts$/, loader: 'ts-loader' }
 		]
 	}
 };

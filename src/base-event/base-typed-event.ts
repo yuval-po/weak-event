@@ -4,8 +4,8 @@ export type EventInvocationOpts = {
 	swallowExceptions: boolean;
 };
 
-const DEFAULT_EVENT_INVOCATION_OPTS: EventInvocationOpts = {
-	swallowExceptions: true,
+const DEFAULT_INVOCATION_OPTS: EventInvocationOpts = {
+	swallowExceptions: true
 };
 
 export abstract class BaseTypedEvent<TSender, TArgs> implements ITypedEvent<TSender, TArgs> {
@@ -20,7 +20,7 @@ export abstract class BaseTypedEvent<TSender, TArgs> implements ITypedEvent<TSen
 		this._handlers.delete(handler);
 	}
 
-	public async invokeAsync(sender: TSender, args: TArgs, options: EventInvocationOpts = DEFAULT_EVENT_INVOCATION_OPTS): Promise<void> {
+	public async invokeAsync(sender: TSender, args: TArgs, options: EventInvocationOpts = DEFAULT_INVOCATION_OPTS): Promise<void> {
 		for (const handler of this._handlers) {
 			this.tryInvokeInternal(handler, sender, args).catch((err) => {
 				console.error(`[TypedEvent.invokeAsync_Catch] Faulted during invocation of an event handler. Error: ${err}`);

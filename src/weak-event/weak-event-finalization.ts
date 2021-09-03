@@ -1,18 +1,18 @@
 import { ITypedEvent, TypedEventHandler } from '../typed-event-interfaces';
 
-type FinalizableEventHandlerRef = { eventSource: ITypedEvent<unknown, unknown>, handler: TypedEventHandler<unknown, unknown> }
+type FinalizableEventHandlerRef = { eventSource: ITypedEvent<unknown, unknown>, handler: TypedEventHandler<unknown, unknown> };
 
 
 // Will this throw on unsupported browsers? Need to check...
-let GLOBAL_LISTENERS_REGISTRY: FinalizationRegistry<FinalizableEventHandlerRef>;
-
 if (!FinalizationRegistry) {
-	throw new Error('FinalizationRegistry is not defined. Weak Events cannot be used. '
-		+ " Please consult 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry' "
-		+ 'for compatibility information');
+	throw new Error(
+		'FinalizationRegistry is not defined. Weak Events cannot be used. '
+		+ " Please consult 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry'"
+		+ ' for compatibility information'
+	);
 }
 
-GLOBAL_LISTENERS_REGISTRY = new FinalizationRegistry(
+const GLOBAL_LISTENERS_REGISTRY: FinalizationRegistry<FinalizableEventHandlerRef> = new FinalizationRegistry(
 	(heldValue: FinalizableEventHandlerRef) => {
 		heldValue.eventSource.detach(heldValue.handler);
 	}

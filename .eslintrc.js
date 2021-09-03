@@ -5,34 +5,42 @@ module.exports = {
 		node: true,
 	},
 	plugins: [
-		'prettier',
+		/* 'prettier', */
 	],
 	extends: [
-		'airbnb-typescript',
-		"prettier",
-		"plugin:vue/vue3-essential",
+		'airbnb-base',
+		'airbnb-typescript/base',
+		/* "prettier", */
 		"eslint:recommended",
-		"@vue/typescript/recommended",
-		"@vue/prettier",
-		"@vue/prettier/@typescript-eslint",
 
 	],
 	parserOptions: {
-		ecmaVersion: 2020,
+		ecmaVersion: 2021,
 		project: './tsconfig.json'
 	},
 	rules: {
-		"prettier/prettier": "error",
+		/* "prettier/prettier": "error", */
 		"import/prefer-default-export": "off",
 		"arrow-body-style": "off",
 		"class-methods-use-this": "off",
 		"no-restricted-syntax": "off",
-		"react/static-property-placement": "off",
 		"no-continue": "off",
 		"no-console": "off",
 		"no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
-		"vue/require-valid-default-prop": "off",
 		"import/no-unresolved": "off",
+		"max-len": ["error", { "code": 135}],
+		"no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1}],
+		"no-tabs": "off",
+		  "@typescript-eslint/indent": "off",
+		"@typescript-eslint/comma-dangle": "off",
+		"comma-dangle": ["error", {
+			"arrays": "never",
+			"objects": "never",
+			"imports": "never",
+			"exports": "never",
+			"functions": "never"
+		}],
+		"padded-blocks": "off"
 	},
 	overrides: [
 		{
@@ -40,11 +48,12 @@ module.exports = {
 			files: ["**/*.ts"],
 			parser: '@typescript-eslint/parser',
 			plugins: [
-				'prettier',
+				/* 'prettier', */
 			],
 			extends: [
-				'airbnb-typescript',
-				"prettier"
+				'airbnb-base',
+				'airbnb-typescript/base',
+				/* "prettier" */
 			],
 			"env": {
 				"es6": true,
@@ -54,18 +63,30 @@ module.exports = {
 				project: './tsconfig.json'
 			},
 			rules: {
-				"prettier/prettier": "error",
+				/* "prettier/prettier": "error", */
 				"import/prefer-default-export": "off",
 				"arrow-body-style": "off",
 				"class-methods-use-this": "off",
 				"no-restricted-syntax": "off",
-				"react/static-property-placement": "off",
 				"no-continue": "off",
 				"no-plusplus": "off",
 				"no-console": "off",
 				"no-underscore-dangle": ["error", { "allowAfterThis": true }],
 				"no-trailing-spaces": "error",
-				"spaced-comment": ["error", "always", { "exceptions": ["#region", "#endregion"] }]
+				"spaced-comment": ["error", "always", { "exceptions": ["#region", "#endregion"] }],
+				"max-len": ["error", { "code": 135}],
+				"no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 1}],
+				"no-tabs": "off",
+				"@typescript-eslint/indent": "off",
+				"@typescript-eslint/comma-dangle": "off",
+				"comma-dangle": ["error", {
+					"arrays": "never",
+					"objects": "never",
+					"imports": "never",
+					"exports": "never",
+					"functions": "never"
+				}],
+				"padded-blocks": "off"
 			}
 		},
 		{
@@ -78,18 +99,13 @@ module.exports = {
 			},
 		},
 		{
-			files: ["scripts/**/*.js"],
-			parserOptions: {
-				ecmaVersion: 2020,
-				sourceType: 'script',
-				project: "./tsconfig.eslint.json",
-			},
+			files: ["**/*.js"],
 			plugins: [
-				'prettier',
+				/* 'prettier', */
 			],
 			extends: [
 				"eslint:recommended",
-				"prettier"
+				/* "prettier" */
 			],
 			"env": {
 				"es6": true,

@@ -28,6 +28,7 @@
 		]
 	},
 	"include": [
+		"webpack.config.js",
 		"src/**/*.ts",
 		"tests/**/*.ts",
 	],
