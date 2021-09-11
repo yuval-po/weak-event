@@ -7,7 +7,7 @@ module.exports = {
 	entry: './src/index.ts',
 	output: {
 		path: path.resolve(__dirname, 'dist', 'bundle'),
-		filename: 'ts-events',
+		filename: 'ts-events.js',
 		library: {
 			name: 'tsEvents',
 			type: 'umd'

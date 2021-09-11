@@ -3,6 +3,18 @@
 	"version": "0.0.1",
 	"private": true,
 	"license": "MIT",
+	"author": {
+		"name": "yuval-po",
+		"url": "https://github.com/yuval-po"
+	},
+	"keywords": [
+		"events",
+		"weak events",
+		"typescript",
+		"lightweight",
+		"zero dependencies",
+		"no dependencies"
+	],
 	"scripts": {
 		"lint": "eslint . --ext .js,.ts --max-warnings=0",
 		"lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx,.vue --max-warnings=0 --fix",
@@ -11,6 +23,17 @@
 		"compile-es6": "tsc -m es6 --outDir ./dist/lib-esm",
 		"compile-bundle": "webpack",
 		"compile-all": "npm run clean && npm run compile-commonjs && npm run compile-es6 && npm run compile-bundle"
+	},
+	"files": [
+		"dist"
+	],
+	"directories": {
+		"example": "example",
+		"lib": "dist"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:yuval-po/ts-events.git"
 	},
 	"devDependencies": {
 		"@types/chai": "^4.2.21",
