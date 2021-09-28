@@ -1,4 +1,4 @@
-# ts-events
+# weak-event
 
 C#-Style Typescript Events/Weak Events
 
