@@ -2,6 +2,8 @@
 
 C#-Style Typescript Events/Weak Events
 
+[![weak-event](https://github.com/yuval-po/weak-event/actions/workflows/weak-event.yml/badge.svg)](https://github.com/yuval-po/weak-event/actions/workflows/weak-event.yml) [![Coverage Status](https://coveralls.io/repos/github/yuval-po/weak-event/badge.svg?branch=main)](https://coveralls.io/github/yuval-po/weak-event?branch=main)
+
 
 Javascript's event are somewhat awkward to use and lack first-class typing support.
 This package seeks to allow for lightweight, zero dependency, easy to use C#-style events that work on NodeJS and modern browsers.
@@ -20,7 +22,7 @@ Usage of weak references in such cases may help prevent hard to detect event han
 ### Typed Event
 
 ```typescript
-import { TypedEvent, ITypedEvent } from 'ts-events';
+import { TypedEvent, ITypedEvent } from 'weak-event';
 
 class DummyEventSource {
 
@@ -87,7 +89,7 @@ sweep the object, at which point a finalizer will be invoked and the dead refere
 This ensures memory is eventually reclaimed and can over time make a significant difference.
 
 ```typescript
-import { TypedEvent, ITypedEvent } from 'ts-events';
+import { TypedEvent, ITypedEvent } from 'weak-event';
 
 class DummyEventSource {
 
