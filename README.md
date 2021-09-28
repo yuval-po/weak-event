@@ -4,6 +4,12 @@ C#-Style Typescript Events/Weak Events
 
 [![weak-event](https://github.com/yuval-po/weak-event/actions/workflows/weak-event.yml/badge.svg)](https://github.com/yuval-po/weak-event/actions/workflows/weak-event.yml) [![Coverage Status](https://coveralls.io/repos/github/yuval-po/weak-event/badge.svg?branch=main)](https://coveralls.io/github/yuval-po/weak-event?branch=main)
 
+</br>
+
+> Note: This package is an ALPHA. It also requires relatively new Node.JS/Browser versions to function.
+Use at your own risk.
+
+</br>
 
 Javascript's event are somewhat awkward to use and lack first-class typing support.
 This package seeks to allow for lightweight, zero dependency, easy to use C#-style events that work on NodeJS and modern browsers.
