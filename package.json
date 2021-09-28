@@ -1,5 +1,5 @@
 {
-	"name": "ts-events",
+	"name": "weak-event",
 	"version": "0.0.1",
 	"private": true,
 	"license": "MIT",
@@ -8,12 +8,14 @@
 		"url": "https://github.com/yuval-po"
 	},
 	"keywords": [
-		"events",
-		"weak events",
-		"typescript",
-		"lightweight",
-		"zero dependencies",
-		"no dependencies"
+		"Events",
+		"Weak Event",
+		"Typescript",
+		"Lightweight",
+		"Zero dependencies",
+		"No dependencies",
+		"FinalizationRegistry",
+		"WeakRef"
 	],
 	"scripts": {
 		"lint": "eslint . --ext .js,.ts --max-warnings=0",
