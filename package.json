@@ -1,6 +1,6 @@
 {
 	"name": "weak-event",
-	"version": "1.0.1",
+	"version": "1.0.2",
 	"private": false,
 	"license": "ISC",
 	"author": {
@@ -26,7 +26,7 @@
 		"clean": "shx rm -rf dist",
 		"test": "mocha --node-option allow-natives-syntax -r ts-node/register tests/**/*.spec.ts",
 		"cover": "node \"node_modules/nyc/bin/nyc.js\" --reporter=lcov --reporter=text-summary npm run test",
-		"compile-commonjs": "tsc"
+		"compile": "tsc"
 	},
 	"main": "dist/index.js",
 	"files": [
