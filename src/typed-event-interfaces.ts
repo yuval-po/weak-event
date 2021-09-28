@@ -3,4 +3,4 @@ export interface ITypedEvent<TSender, TArgs> {
 	detach(handler: TypedEventHandler<TSender, TArgs>): void;
 }
 
-export type TypedEventHandler<TSender, TArgs> = (sender: TSender, args: TArgs) => void | Promise<void>;
+export type TypedEventHandler<TSender, TArgs> = (sender: TSender, args: TArgs) => unknown | Promise<unknown>;

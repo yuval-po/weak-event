@@ -16,6 +16,7 @@
 		"baseUrl": ".",
 		"outDir": "./dist/lib",
 		"types": [
+			"node",
 			"mocha",
 			"chai"
 		],

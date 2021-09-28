@@ -1,12 +1,8 @@
-
-const path = require('path');
-
 module.exports = {
 	mode: 'development',
 	devtool: 'source-map',
 	entry: './src/index.ts',
 	output: {
-		path: path.resolve(__dirname, 'dist', 'bundle'),
 		filename: 'ts-events.js',
 		library: {
 			name: 'tsEvents',

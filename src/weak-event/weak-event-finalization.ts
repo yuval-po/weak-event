@@ -1,6 +1,7 @@
+import { TypedEvent } from '../base-event';
 import { ITypedEvent, TypedEventHandler } from '../typed-event-interfaces';
 
-type FinalizableEventHandlerRef = { eventSource: ITypedEvent<unknown, unknown>, handler: TypedEventHandler<unknown, unknown> };
+export type FinalizableEventHandlerRef = { eventSource: ITypedEvent<unknown, unknown>, handler: TypedEventHandler<unknown, unknown> };
 
 
 // Will this throw on unsupported browsers? Need to check...
@@ -12,16 +13,20 @@ if (!FinalizationRegistry) {
 	);
 }
 
+const finalizationEvent: TypedEvent<null, FinalizableEventHandlerRef> = new TypedEvent();
+export const handlerFinalizedEvent: ITypedEvent<null, FinalizableEventHandlerRef> = finalizationEvent;
+
 const GLOBAL_LISTENERS_REGISTRY: FinalizationRegistry<FinalizableEventHandlerRef> = new FinalizationRegistry(
 	(heldValue: FinalizableEventHandlerRef) => {
 		heldValue.eventSource.detach(heldValue.handler);
+		finalizationEvent.invokeAsync(null, heldValue);
 	}
 );
 
 function wrapHandler<TSender, TArgs>(handler: TypedEventHandler<TSender, TArgs>): TypedEventHandler<TSender, TArgs> {
 	const ref = new WeakRef(handler);
 	return (sender: TSender, e: TArgs) => {
-		ref.deref()?.(sender, e);
+		return ref.deref()?.(sender, e);
 	};
 }
 

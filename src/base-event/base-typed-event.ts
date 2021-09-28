@@ -27,29 +27,32 @@ export class TypedEvent<TSender, TArgs> implements ITypedEvent<TSender, TArgs> {
 	public invoke(sender: TSender, args: TArgs, options: EventInvocationOpts = DEFAULT_INVOCATION_OPTS): void {
 		for (const handler of this._handlers) {
 			const { succeeded, error } = this.tryInvokeInternal(handler, sender, args);
-			if (!succeeded && options.swallowExceptions === false) {
-					throw error;
+			if (!succeeded && options.swallowExceptions !== true) {
+				throw error;
 			}
 		}
 	}
 
 	public async invokeAsync(sender: TSender, args: TArgs, options: EventInvocationOpts = DEFAULT_INVOCATION_OPTS): Promise<void> {
-		for (const handler of this._handlers) {
-			if (options?.parallelize === false) {
-				// If 'parallelize' is explicitly false, invoke the handlers one by one
+		if (options?.parallelize === false) {
+			for (const handler of this._handlers) {
 				// eslint-disable-next-line no-await-in-loop
-				const { succeeded, error } = this.tryInvokeInternal(handler, sender, args);
-				if (!succeeded && options.swallowExceptions === false) {
+				const { succeeded, error } = await this.tryAsyncInvokeInternal(handler, sender, args);
+				if (!succeeded && options.swallowExceptions !== true) {
 					throw error;
+				}
 			}
-			} else {
+		} else {
+			const handlerPromises: Promise<void>[] = [];
+			for (const handler of this._handlers) {
 				// Otherwise, invoke them asynchronously and stop on failure (if required)
-				this.tryAsyncInvokeInternal(handler, sender, args).catch((err) => {
-					if (options.swallowExceptions === false) {
-						throw err;
+				handlerPromises.push(this.tryAsyncInvokeInternal(handler, sender, args).then(({ succeeded, error }) => {
+					if (!succeeded && options.swallowExceptions !== true) {
+						throw error;
 					}
-				});
+				}));
 			}
+			await Promise.all(handlerPromises);
 		}
 	}
 
