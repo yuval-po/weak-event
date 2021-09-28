@@ -1,7 +1,7 @@
 {
 	"name": "weak-event",
 	"version": "1.0.0",
-	"private": true,
+	"private": false,
 	"license": "ISC",
 	"author": {
 		"name": "yuval-po",
@@ -26,20 +26,13 @@
 		"clean": "shx rm -rf dist",
 		"test": "mocha --node-option allow-natives-syntax -r ts-node/register tests/**/*.spec.ts",
 		"cover": "node \"node_modules/nyc/bin/nyc.js\" --reporter=lcov --reporter=text-summary npm run test",
-		"compile-commonjs-dev": "tsc",
-		"compile-es6-dev": "tsc -m es6 --outDir ./dist/lib-esm",
-		"compile-bundle-dev": "webpack --output-path ./dist/bundle",
-		"compile-all-dev": "npm run clean && npm run compile-commonjs-dev && npm run compile-es6-dev && npm run compile-bundle-dev",
-		"compile-commonjs-release": "tsc --outDir ./src",
-		"compile-es6-release": "tsc -m es6 --outDir ./src",
-		"compile-bundle-release": "webpack --output-path ./src",
-		"compile-all-release": "npm run clean && npm run compile-commonjs-release && npm run compile-es6-release && npm run compile-bundle-release"
+		"compile-commonjs": "tsc"
 	},
+	"main": "dist/index.js",
 	"files": [
 		"dist"
 	],
 	"directories": {
-		"example": "example",
 		"lib": "dist"
 	},
 	"repository": {

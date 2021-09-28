@@ -14,7 +14,7 @@
 		"sourceMap": true,
 		"declaration": true,
 		"baseUrl": ".",
-		"outDir": "./dist/lib",
+		"outDir": "./dist",
 		"types": [
 			"node",
 			"mocha",
@@ -31,10 +31,7 @@
 		]
 	},
 	"include": [
-		"webpack.config.js",
-		"src/**/*.ts",
-		"tests/**/*.ts",
-		"examples/**/*.ts",
+		"src/**/*.ts"
 	],
 	"exclude": [
 		"node_modules",
