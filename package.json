@@ -1,6 +1,6 @@
 {
 	"name": "weak-event",
-	"version": "1.0.3-alpha.0",
+	"version": "1.0.3-alpha.1",
 	"private": false,
 	"license": "ISC",
 	"author": {
@@ -39,6 +39,9 @@
 		"type": "git",
 		"url": "git@github.com:yuval-po/weak-event.git"
 	},
+	"bugs": {
+		"url": "https://github.com/yuval-po/weak-event/issues"
+	  },
 	"devDependencies": {
 		"@types/chai": "^4.2.21",
 		"@types/chai-as-promised": "^7.1.4",
