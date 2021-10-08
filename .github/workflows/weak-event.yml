@@ -50,7 +50,7 @@ jobs:
       if: ${{ github.ref == 'refs/heads/main' }}
 
     - name: Bump version
-      uses: TriPSs/conventional-changelog-action@releases/v3.
+      uses: TriPSs/conventional-changelog-action@releases/v3
       with:
         github-token: ${{ secrets.GITHUB_TOKEN_ACTION }}
         git-message: 'chore(release): {version}'
