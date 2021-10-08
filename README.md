@@ -6,7 +6,7 @@ C#-Style Typescript Events/Weak Events
 
 </br>
 
-> Note: This package is an ALPHA. It also requires relatively new Node.JS/Browser versions to function.
+> Note: This package is an ALPHA. It also requires relatively new Node.JS/Browser versions to function as mentioned below.
 Use at your own risk.
 
 </br>

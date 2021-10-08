@@ -35,15 +35,24 @@ export function createWeakEventHandler<TSender, TArgs>(
 	handler: TypedEventHandler<TSender, TArgs>
 ): TypedEventHandler<TSender, TArgs> {
 
-	const castHandler = handler as TypedEventHandler<unknown, unknown>;
-	GLOBAL_LISTENERS_REGISTRY.register(eventSource, { eventSource, handler: castHandler }, handler);
-	return wrapHandler(handler);
+	const wrappedHandler = wrapHandler(handler) as TypedEventHandler<unknown, unknown>;
+	// const castHandler = handler as TypedEventHandler<unknown, unknown>;
+	GLOBAL_LISTENERS_REGISTRY.register(
+		handler,
+		{
+			eventSource,
+			handler: wrappedHandler
+		},
+		wrappedHandler
+	);
+	return wrappedHandler;
 }
 
 export function unregisterWeakEventHandler<TSender, TArgs>(
 	handler: TypedEventHandler<TSender, TArgs>
 ): TypedEventHandler<TSender, TArgs> {
 
-	GLOBAL_LISTENERS_REGISTRY.unregister(handler);
-	return wrapHandler(handler);
+	const wrappedHandler = wrapHandler(handler);
+	GLOBAL_LISTENERS_REGISTRY.unregister(wrappedHandler);
+	return wrappedHandler;
 }
