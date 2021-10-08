@@ -46,13 +46,13 @@ jobs:
     steps:
     - uses: actions/checkout@v2
       with:
-        token: ${{ secrets.GITHUB_TOKEN_ACTION }}
+        token: ${{ github.token }} 
       if: ${{ github.ref == 'refs/heads/main' }}
 
     - name: Bump version
       uses: TriPSs/conventional-changelog-action@releases/v3
       with:
-        github-token: ${{ secrets.GITHUB_TOKEN_ACTION }}
+        github-token: ${{ github.token }} 
         git-message: 'chore(release): {version}'
         preset: 'angular'
         tag-prefix: ''

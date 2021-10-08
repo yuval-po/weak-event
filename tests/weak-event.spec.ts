@@ -138,5 +138,5 @@ describe('Weak-Event Finalization', () => {
 
 		// Wait for the FinalizationRegistry to finalize the handler
 		await expect(handlerReclaimed).to.be.fulfilled;
-	}).slow(20000).timeout(30000) // GC lives by its own rules. On testing machine, reclamation/notification took around 8800 ms
+	}).slow(25000).timeout(45000) // GC lives by its own rules. On testing machine, reclamation/notification took around 8800 ms
 });
