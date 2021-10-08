@@ -39,18 +39,3 @@ jobs:
         npm install
         npm run lint
         npm run compile
-  
-  bump-version:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@v2
-      with:
-        token: ${{ github.token }} 
-      if: ${{ github.ref == 'refs/heads/main' }}
-
-    - name: Bump version
-      uses: TriPSs/conventional-changelog-action@releases/v3
-      with:
-        github-token: ${{ github.token }} 
-      if: ${{ github.ref == 'refs/heads/main' }}
