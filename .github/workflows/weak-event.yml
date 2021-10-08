@@ -1,6 +1,10 @@
 name: weak-event
 
-on: [push]
+on:
+  push:
+    paths-ignore:
+      - 'package.json'
+      - 'CHANGELOG.md'
 
 jobs:
   cover:
@@ -29,7 +33,7 @@ jobs:
       matrix:
         node-version: [14.6]
     steps:
-    - uses: actions/checkout@v1 
+    - uses: actions/checkout@v2
     - name: Install node
       uses: actions/setup-node@v1
       with:
@@ -39,3 +43,8 @@ jobs:
         npm install
         npm run lint
         npm run compile
+
+    - name: Conventional Changelog Action
+        uses: TriPSs/conventional-changelog-action@v3
+        with:
+          github-token: ${{ secrets.github_token }}
