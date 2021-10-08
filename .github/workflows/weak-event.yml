@@ -40,27 +40,21 @@ jobs:
         npm run lint
         npm run compile
   
-  name: Bump version
-  on:
-    push:
-      branches:
-        - main
-      paths-ignore:
-        - 'package.json'
-        - 'CHANGELOG.md'
-  jobs:
-    build:
-      runs-on: ubuntu-latest
+  bump-version:
+    runs-on: ubuntu-latest
 
-      steps:
-      - uses: actions/checkout@v2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN_ACTION }}
-      - name: Bump version
-        uses: TriPSs/conventional-changelog-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN_ACTION }}
-          git-message: 'chore(release): {version}'
-          preset: 'angular'
-          tag-prefix: ''
-          output-file: 'CHANGELOG.md'
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        token: ${{ secrets.GITHUB_TOKEN_ACTION }}
+      if: ${{ github.ref == 'refs/heads/main' }}
+
+    - name: Bump version
+      uses: TriPSs/conventional-changelog-action@releases/v3.
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN_ACTION }}
+        git-message: 'chore(release): {version}'
+        preset: 'angular'
+        tag-prefix: ''
+        output-file: 'CHANGELOG.md'
+      if: ${{ github.ref == 'refs/heads/main' }}
