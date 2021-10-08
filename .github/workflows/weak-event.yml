@@ -53,8 +53,4 @@ jobs:
       uses: TriPSs/conventional-changelog-action@releases/v3
       with:
         github-token: ${{ github.token }} 
-        git-message: 'chore(release): {version}'
-        preset: 'angular'
-        tag-prefix: ''
-        output-file: 'CHANGELOG.md'
       if: ${{ github.ref == 'refs/heads/main' }}
