@@ -57,4 +57,4 @@ jobs:
       with:
         github-token: ${{ secrets.github_token }}
         skip-on-empty: false
-        git-message: Automatic changelog update by Conventional Changelog Action
+        git-message: 'Automatic changelog update by Conventional Changelog Action - {version}'
