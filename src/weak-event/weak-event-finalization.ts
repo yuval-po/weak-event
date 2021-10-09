@@ -1,58 +1,59 @@
-import { TypedEvent } from '../base-event';
 import { ITypedEvent, TypedEventHandler } from '../typed-event-interfaces';
+import { FinalizationRegistryMissingError } from './errors';
 
-export type FinalizableEventHandlerRef = { eventSource: ITypedEvent<unknown, unknown>, handler: TypedEventHandler<unknown, unknown> };
-
-
-// Will this throw on unsupported browsers? Need to check...
-if (!FinalizationRegistry) {
-	throw new Error(
-		'FinalizationRegistry is not defined. Weak Events cannot be used. '
-		+ " Please consult 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry'"
-		+ ' for compatibility information'
-	);
-}
-
-const finalizationEvent: TypedEvent<null, FinalizableEventHandlerRef> = new TypedEvent();
-export const handlerFinalizedEvent: ITypedEvent<null, FinalizableEventHandlerRef> = finalizationEvent;
-
-const GLOBAL_LISTENERS_REGISTRY: FinalizationRegistry<FinalizableEventHandlerRef> = new FinalizationRegistry(
-	(heldValue: FinalizableEventHandlerRef) => {
-		heldValue.eventSource.detach(heldValue.handler);
-		finalizationEvent.invokeAsync(null, heldValue);
-	}
-);
-
-function wrapHandler<TSender, TArgs>(handler: TypedEventHandler<TSender, TArgs>): TypedEventHandler<TSender, TArgs> {
-	const ref = new WeakRef(handler);
-	return (sender: TSender, e: TArgs) => {
-		return ref.deref()?.(sender, e);
-	};
-}
-
-export function createWeakEventHandler<TSender, TArgs>(
+export type FinalizableEventHandlerRef<TSender, TArgs> = {
 	eventSource: ITypedEvent<TSender, TArgs>,
-	handler: TypedEventHandler<TSender, TArgs>
-): TypedEventHandler<TSender, TArgs> {
+	handlerRef: WeakRef<TypedEventHandler<TSender, TArgs>>
+};
 
-	const wrappedHandler = wrapHandler(handler) as TypedEventHandler<unknown, unknown>;
-	// const castHandler = handler as TypedEventHandler<unknown, unknown>;
-	GLOBAL_LISTENERS_REGISTRY.register(
-		handler,
-		{
-			eventSource,
-			handler: wrappedHandler
-		},
-		wrappedHandler
-	);
-	return wrappedHandler;
-}
+type Finalizer<TSender, TArgs> = (heldValue: FinalizableEventHandlerRef<TSender, TArgs>) => void;
 
-export function unregisterWeakEventHandler<TSender, TArgs>(
-	handler: TypedEventHandler<TSender, TArgs>
-): TypedEventHandler<TSender, TArgs> {
+const TEST = new Set<any>();
 
-	const wrappedHandler = wrapHandler(handler);
-	GLOBAL_LISTENERS_REGISTRY.unregister(wrappedHandler);
-	return wrappedHandler;
+export class WeakHandlerHolder<TSender, TArgs> {
+
+	private _finalizationRegistry: FinalizationRegistry<FinalizableEventHandlerRef<TSender, TArgs>>;
+
+	private _refs: WeakRef<TypedEventHandler<TSender, TArgs>>[] = [];
+
+	public constructor(finalizer: Finalizer<TSender, TArgs>) {
+		try {
+			this._finalizationRegistry = new FinalizationRegistry(finalizer);
+			TEST.add(this._finalizationRegistry);
+		} catch (err) {
+			const asRefErr = err as ReferenceError;
+			if (asRefErr.name === 'FinalizationRegistry') {
+				throw new FinalizationRegistryMissingError(
+					'FinalizationRegistry is not defined. Weak Events cannot be used. '
+					+ ' Please consult '
+					+ "'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry'"
+					+ ' for compatibility information'
+				);
+			}
+			throw err;
+		}
+	}
+
+	public getWeakHandler(
+		eventSource: ITypedEvent<TSender, TArgs>,
+		handler: TypedEventHandler<TSender, TArgs>
+	): WeakRef<TypedEventHandler<TSender, TArgs>> {
+
+		const handlerRef = new WeakRef(handler);
+		this._finalizationRegistry.register(handler, { eventSource, handlerRef }, handlerRef);
+		this._refs.push(handlerRef);
+		return handlerRef;
+	}
+
+	public releaseWeakHandler(handler: TypedEventHandler<TSender, TArgs>): WeakRef<TypedEventHandler<TSender, TArgs>> {
+		const existingRef = this._refs.find((ref) => ref?.deref() === handler);
+		const refToUse = existingRef || new WeakRef(handler);
+		this._finalizationRegistry.unregister(refToUse);
+		return refToUse;
+	}
+
+	public unregisterRef(ref: WeakRef<TypedEventHandler<TSender, TArgs>>): void {
+		this._finalizationRegistry.unregister(ref);
+	}
+
 }
