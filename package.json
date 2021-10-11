@@ -1,6 +1,6 @@
 {
   "name": "weak-event",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "private": false,
   "license": "ISC",
   "author": {
@@ -8,7 +8,7 @@
     "url": "https://github.com/yuval-po"
   },
   "engines": {
-	  "node": ">=14.6"
+    "node": ">=14.6"
   },
   "keywords": [
     "Event",
