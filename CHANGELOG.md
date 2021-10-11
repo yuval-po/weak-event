@@ -1,7 +1,7 @@
 ## [2.0.1](https://github.com/yuval-po/weak-event/compare/v1.0.6...v2.0.1) (2021-10-11)
 
 
-### Bug Fixes
+### Bug Fixes --- BREAKING CHANGE
 
 * Overhauled finalization structure ([#1](https://github.com/yuval-po/weak-event/issues/1)) ([c94ab3d](https://github.com/yuval-po/weak-event/commit/c94ab3d79191670ff6282cc99eac818c4dbeb2c6))
 
