@@ -16,7 +16,7 @@ This package seeks to allow for lightweight, zero dependency, easy to use C#-sty
 > Be wary of this in performance-critical applications.
 
 The package is quite similar to [strongly-typed-events](https://github.com/KeesCBakker/Strongly-Typed-Events-for-TypeScript) (a.k.a [ts-events](https://www.npmjs.com/package/ts-events)) but is significantly
-smaller at just ~30kb and less featured.
+smaller and less featured.
 
 The main focus however, is support for modern weak events that require NodeJS >= 14.6 or an updated, modern browser due to
 the use of [FinalizationRegistry](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry)
