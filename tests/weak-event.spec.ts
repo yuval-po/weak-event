@@ -8,7 +8,7 @@ import chaiAsPromised from 'chai-as-promised';
 import { inspect } from 'util';
 chai.use(chaiAsPromised);
 
-import { WeakEvent, FinalizableEventHandlerRef } from '../src';
+import { WeakEvent } from '../src';
 import { leakReference, TaggedEvent } from './weak-event-finalization-helpers';
 
 describe('Weak-Event Sanity', () => {
@@ -167,11 +167,18 @@ describe('Weak-Event Asynchronous Error Handling', () => {
 	});
 });
 
+const GC_PIN = new Set<any>();
+
 describe('Weak-Event Finalization', () => {
+	beforeEach(function () {
+		GC_PIN.clear();
+	});
+
 	it('Dead handlers are finalized', async () => {
 
 		// Create a handler with an extra field for easy tracking
 		const event = new WeakEvent<undefined, undefined>();
+		GC_PIN.add(event);
 
 		// Create a promise that's fulfilled when the FinalizationRegistry finalizes the handler
 		// Note that handlers from previous tests may very well still reside in the registry
@@ -196,17 +203,18 @@ describe('Weak-Event Finalization', () => {
 		await expect(handlerReclaimed).to.be.fulfilled;
 	}).slow(25000).timeout(45000) // GC lives by its own rules. On testing machine, reclamation/notification took around 8800 ms
 
-	it("Doesn't break during stress test", async () => {
+	it("Doesn't break during 100,000 events stress test", async () => {
 		const NUM_OF_EVENTS = 100000;
 
 		// Please take a gander at test 'Dead handlers are finalized' for thorough documentation
 		let reclaimedHandlers: number = 0;
 		const allHandlersReclaimed = new Promise((resolve) => {
-	
+
 			const events: TaggedEvent[] = [];
 			// Leak NUM_OF_EVENTS event + handler pairs and check whether they're all reclaimed
 			for (let i = 0; i < NUM_OF_EVENTS + 1; i++) {
 				events[i] = new TaggedEvent(i);
+				GC_PIN.add(events[i]);
 				events[i].handlerFinalizedEvent.attach((sender, e) => {
 					const castEvent = e.eventSource as TaggedEvent;
 					if (typeof castEvent?.tag === 'number') {
@@ -228,4 +236,29 @@ describe('Weak-Event Finalization', () => {
 		// Wait for the FinalizationRegistry to finalize the handler
 		await expect(allHandlersReclaimed).to.be.fulfilled;
 	}).slow(45000).timeout(75000)
+
+	it("Doesn't break during 100,000 handlers stress test", async () => {
+		const NUM_OF_HANDLERS = 100000;
+		let reclaimedHandlers: number = 0;
+
+		const event = new TaggedEvent();
+		GC_PIN.add(event);
+
+		const allHandlersReclaimed = new Promise((resolve) => {
+			event.handlerFinalizedEvent.attach((sender, e) => {
+				reclaimedHandlers++;
+				if (reclaimedHandlers === NUM_OF_HANDLERS) {
+					resolve(true);
+				}
+			});
+			for (let i = 0; i < NUM_OF_HANDLERS + 1; i++) {
+				leakReference(event);
+			}
+
+		});
+
+		await eval("%CollectGarbage('all')");
+
+		await expect(allHandlersReclaimed).to.be.fulfilled;
+	}).slow(55000).timeout(100000)
 });

@@ -8,7 +8,6 @@ export type FinalizableEventHandlerRef<TSender, TArgs> = {
 
 type Finalizer<TSender, TArgs> = (heldValue: FinalizableEventHandlerRef<TSender, TArgs>) => void;
 
-const TEST = new Set<any>();
 
 export class WeakHandlerHolder<TSender, TArgs> {
 
@@ -19,7 +18,6 @@ export class WeakHandlerHolder<TSender, TArgs> {
 	public constructor(finalizer: Finalizer<TSender, TArgs>) {
 		try {
 			this._finalizationRegistry = new FinalizationRegistry(finalizer);
-			TEST.add(this._finalizationRegistry);
 		} catch (err) {
 			const asRefErr = err as ReferenceError;
 			if (asRefErr.name === 'FinalizationRegistry') {
