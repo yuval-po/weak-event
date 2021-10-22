@@ -1,7 +1,16 @@
+## [2.0.2](https://github.com/yuval-po/weak-event/compare/v2.0.1...v2.0.2) (2021-10-22)
+
+
+### Bug Fixes
+
+* **docs:** Added documentation to externally exposed interfaces ([ad3c406](https://github.com/yuval-po/weak-event/commit/ad3c4060e58ddd42c9cc33a1f1728e916edc24a5))
+
+
+
 ## [2.0.1](https://github.com/yuval-po/weak-event/compare/v1.0.6...v2.0.1) (2021-10-11)
 
 
-### Bug Fixes --- BREAKING CHANGE
+### Bug Fixes
 
 * Overhauled finalization structure ([#1](https://github.com/yuval-po/weak-event/issues/1)) ([c94ab3d](https://github.com/yuval-po/weak-event/commit/c94ab3d79191670ff6282cc99eac818c4dbeb2c6))
 
