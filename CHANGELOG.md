@@ -1,3 +1,12 @@
+## [2.0.3](https://github.com/yuval-po/weak-event/compare/v2.0.2...v2.0.3) (2021-10-22)
+
+
+### Bug Fixes
+
+* **docs:** Internal interface documentation and naming changes ([8ddb27d](https://github.com/yuval-po/weak-event/commit/8ddb27d0e791371d5893611221980c1018e0a06c))
+
+
+
 ## [2.0.2](https://github.com/yuval-po/weak-event/compare/v2.0.1...v2.0.2) (2021-10-22)
 
 
@@ -33,15 +42,6 @@
 * Fiddling with CI/CD ([f8a3186](https://github.com/yuval-po/weak-event/commit/f8a318661d49ee3d0d9093ea5805c1bd008163bf))
 * Fiddling with CI/CD ([d24ab08](https://github.com/yuval-po/weak-event/commit/d24ab080910f8dc4a7841a833d70109b3cafefeb))
 * Updated CI/CD to use seperate steps ([39603b0](https://github.com/yuval-po/weak-event/commit/39603b0cd7b4ba11493afc2c2e4192cb80a5a964))
-
-
-
-## [1.0.4](https://github.com/yuval-po/weak-event/compare/94d232f128c4330dd19c86bb72d7a658d21ed7b8...v1.0.4) (2021-10-09)
-
-
-### Bug Fixes
-
-* Tmp Testing CI/CD and fixes ([94d232f](https://github.com/yuval-po/weak-event/commit/94d232f128c4330dd19c86bb72d7a658d21ed7b8))
 
 
 
