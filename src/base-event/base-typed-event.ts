@@ -1,5 +1,5 @@
 import { EventInvocationOpts, IEventSource, TypedEventHandler } from '../typed-event-interfaces';
-import { eventInvoke, eventInvokeAsync } from './typed-event-functional';
+import { invokeEventHandlers, invokeEventHandlersAsync } from './typed-event-functional';
 
 /**
  * The default invocation options for the `WeakEvent` class.
@@ -33,10 +33,10 @@ export class TypedEvent<TSender, TArgs> implements IEventSource<TSender, TArgs> 
 	}
 
 	public invoke(sender: TSender, args: TArgs, options: EventInvocationOpts = DEFAULT_INVOCATION_OPTS): void {
-		eventInvoke(this._handlers, sender, args, options);
+		invokeEventHandlers(this._handlers, sender, args, options);
 	}
 
 	public async invokeAsync(sender: TSender, args: TArgs, options: EventInvocationOpts = DEFAULT_INVOCATION_OPTS): Promise<void> {
-		await eventInvokeAsync(this._handlers, sender, args, options);
+		await invokeEventHandlersAsync(this._handlers, sender, args, options);
 	}
 }

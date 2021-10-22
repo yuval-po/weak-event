@@ -43,6 +43,8 @@ export interface ITypedEvent<TSender, TArgs> {
 	/**
 	 * Attaches the given handler to the event
 	 *
+	 * @description The same handler may be attached multiple times and will be invoked the same number of times
+	 *
 	 * @param {TypedEventHandler<TSender, TArgs>} handler An event handler function to attach
 	 * @memberof ITypedEvent
 	 */
@@ -50,6 +52,9 @@ export interface ITypedEvent<TSender, TArgs> {
 
 	/**
 	 * Detaches the given handler from the event
+	 *
+	 * @description When detaching a handler that is attached multiple times, only one instance will be detached.
+	 * This method does nothing if the given handler was not already attached.
 	 *
 	 * @param {TypedEventHandler<TSender, TArgs>} handler The event handler function to detach
 	 * @memberof ITypedEvent

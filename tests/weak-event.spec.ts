@@ -126,7 +126,7 @@ describe('Weak-Event Synchronous Error Handling', () => {
 	});
 
 
-	it("Synchronous handler exceptions do not cause 'WeakEvent.invoke' to throw when 'swallowExceptions' is 'true'", () => {
+	it("Synchronous handler exceptions should not cause 'WeakEvent.invoke' to throw when 'swallowExceptions' is 'true'", () => {
 		const event = new WeakEvent<undefined, boolean>();
 		const handler = (sender: undefined, e: boolean) => { throw new Error(); };
 		event.attach(handler);
@@ -151,7 +151,7 @@ describe('Weak-Event Asynchronous Error Handling', () => {
 	});
 
 
-	it("Asynchronous handler exceptions do not cause 'WeakEvent.invoke' to throw when 'swallowExceptions' is 'true' and 'parallelize' is 'false'", async () => {
+	it("Asynchronous handler exceptions should not cause 'WeakEvent.invoke' to throw when 'swallowExceptions' is 'true' and 'parallelize' is 'false'", async () => {
 		const event = new WeakEvent<undefined, boolean>();
 		const handler = async (sender: undefined, e: boolean) => { throw new Error(); }
 		event.attach(handler);

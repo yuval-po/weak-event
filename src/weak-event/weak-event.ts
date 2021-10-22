@@ -1,6 +1,6 @@
 import { TypedEvent } from '../base-event';
 import { FinalizableEventHandlerRef, WeakHandlerHolder } from './weak-event-finalization';
-import { eventSafeInvoke, eventSafeInvokeAsync } from '../base-event/typed-event-functional';
+import { eventHandlerSafeInvoke, eventHandlerSafeInvokeAsync } from '../base-event/typed-event-functional';
 import {
 	EventInvocationOpts,
 	IEventSource,
@@ -59,7 +59,7 @@ export class WeakEvent<TSender, TArgs> implements IEventSource<TSender, TArgs> {
 		for (const handlerRef of this._handlers) {
 			const dereferencedHandler = handlerRef?.deref();
 			if (dereferencedHandler) {
-				const { succeeded, error } = eventSafeInvoke(dereferencedHandler, sender, args);
+				const { succeeded, error } = eventHandlerSafeInvoke(dereferencedHandler, sender, args);
 				if (!succeeded && options?.swallowExceptions !== true) {
 					throw error;
 				}
@@ -82,7 +82,7 @@ export class WeakEvent<TSender, TArgs> implements IEventSource<TSender, TArgs> {
 			const dereferencedHandler = handlerRef?.deref();
 			if (dereferencedHandler) {
 				// eslint-disable-next-line no-await-in-loop
-				const { succeeded, error } = await eventSafeInvokeAsync(dereferencedHandler, sender, args);
+				const { succeeded, error } = await eventHandlerSafeInvokeAsync(dereferencedHandler, sender, args);
 				if (!succeeded && options.swallowExceptions !== true) {
 					throw error;
 				}
@@ -98,7 +98,7 @@ export class WeakEvent<TSender, TArgs> implements IEventSource<TSender, TArgs> {
 			const dereferencedHandler = handlerRef?.deref();
 			if (dereferencedHandler) {
 				// Otherwise, invoke them asynchronously and stop on failure (if required)
-				handlerPromises.push(eventSafeInvokeAsync(dereferencedHandler, sender, args)
+				handlerPromises.push(eventHandlerSafeInvokeAsync(dereferencedHandler, sender, args)
 					.then(({ succeeded, error }) => {
 						if (!succeeded && options.swallowExceptions !== true) {
 							throw error;
@@ -115,11 +115,6 @@ export class WeakEvent<TSender, TArgs> implements IEventSource<TSender, TArgs> {
 		this._handlers.push(this._refHolder.getWeakHandler(this, handler));
 	}
 
-	/**
-	 * Detaches the given `TypedEventHandler` from the event source.
-	 * This method does nothing if the handler was not previously registered.
-	 * @param handler The `TypedEventHandler` to detach
-	 */
 	public detach(handler: TypedEventHandler<TSender, TArgs>): void {
 		const ref = this._refHolder.releaseWeakHandler(handler);
 		this.tryRemoveHandlerRef(ref);
