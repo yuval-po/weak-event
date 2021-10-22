@@ -8,12 +8,34 @@ import {
 	TypedEventHandler
 } from '../typed-event-interfaces';
 
+
+/**
+ * The default invocation options for the `WeakEvent` class.
+ * @type {*}
+ */
 const DEFAULT_INVOCATION_OPTS: EventInvocationOpts = {
 	swallowExceptions: false,
 	parallelize: true
 };
 
 
+/**
+ * An event who's handlers are weakly referenced
+ *
+ * @description Handlers attached to this event are weakly referenced and as such may be garbage collected
+ * if the handler goes out of scope. This prevents certain types of event-related memory leaks.
+ *
+ * For information regarding this pattern, please visit:
+ * * https://v8.dev/features/weak-references
+ * * https://docs.microsoft.com/en-us/dotnet/desktop/wpf/advanced/weak-event-patterns
+ *
+ * @export
+ * @class WeakEvent
+ * @implements {IEventSource<TSender, TArgs>}
+ * @param {TSender} sender The event's source (usually the particular instance raising the event)
+ * as should be provided to the event handlers
+ * @param {TArgs} args The arguments to provide to the handlers
+ */
 export class WeakEvent<TSender, TArgs> implements IEventSource<TSender, TArgs> {
 
 	private _handlers: WeakRef<TypedEventHandler<TSender, TArgs>>[] = [];
