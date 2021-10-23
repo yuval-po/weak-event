@@ -1,3 +1,14 @@
+## [2.0.4](https://github.com/yuval-po/weak-event/compare/v2.0.3...v2.0.4) (2021-10-23)
+
+
+### Bug Fixes
+
+* **docs:** Documented `WeakEvent.handlerFinalizedEvent` ([027797e](https://github.com/yuval-po/weak-event/commit/027797eb4ea4df847ddacf3c53175f8ccf23991a))
+* **tests:** Added `TypedEvent` tests ([60f5bee](https://github.com/yuval-po/weak-event/commit/60f5bee28a920db9e5391a80fd942717272a8372))
+* **TypedEvent:** Updated TypedEvent's behavior ([c5f2a67](https://github.com/yuval-po/weak-event/commit/c5f2a67510d31d2e0e2bcc2adb4047aaf9244180))
+
+
+
 ## [2.0.3](https://github.com/yuval-po/weak-event/compare/v2.0.2...v2.0.3) (2021-10-22)
 
 
@@ -31,17 +42,6 @@
 ### Bug Fixes
 
 * **tests:** Fixed finalization tests ([c7739b3](https://github.com/yuval-po/weak-event/commit/c7739b34d6710d7ce96848464a09c47a16b979a5))
-
-
-
-## [1.0.5](https://github.com/yuval-po/weak-event/compare/v1.0.4...v1.0.5) (2021-10-09)
-
-
-### Bug Fixes
-
-* Fiddling with CI/CD ([f8a3186](https://github.com/yuval-po/weak-event/commit/f8a318661d49ee3d0d9093ea5805c1bd008163bf))
-* Fiddling with CI/CD ([d24ab08](https://github.com/yuval-po/weak-event/commit/d24ab080910f8dc4a7841a833d70109b3cafefeb))
-* Updated CI/CD to use seperate steps ([39603b0](https://github.com/yuval-po/weak-event/commit/39603b0cd7b4ba11493afc2c2e4192cb80a5a964))
 
 
 
