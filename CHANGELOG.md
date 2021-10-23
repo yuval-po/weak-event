@@ -1,3 +1,12 @@
+## [2.0.5](https://github.com/yuval-po/weak-event/compare/v2.0.4...v2.0.5) (2021-10-23)
+
+
+### Bug Fixes
+
+* **docs:** Updated README.md ([1910358](https://github.com/yuval-po/weak-event/commit/191035869bd8f4d833cbb71db516205ce7aa5a8a))
+
+
+
 ## [2.0.4](https://github.com/yuval-po/weak-event/compare/v2.0.3...v2.0.4) (2021-10-23)
 
 
@@ -33,15 +42,6 @@
 ### Bug Fixes
 
 * Overhauled finalization structure ([#1](https://github.com/yuval-po/weak-event/issues/1)) ([c94ab3d](https://github.com/yuval-po/weak-event/commit/c94ab3d79191670ff6282cc99eac818c4dbeb2c6))
-
-
-
-## [1.0.6](https://github.com/yuval-po/weak-event/compare/v1.0.5...v1.0.6) (2021-10-11)
-
-
-### Bug Fixes
-
-* **tests:** Fixed finalization tests ([c7739b3](https://github.com/yuval-po/weak-event/commit/c7739b34d6710d7ce96848464a09c47a16b979a5))
 
 
 
