@@ -44,6 +44,16 @@ export class WeakEvent<TSender, TArgs> implements IEventSource<TSender, TArgs> {
 
 	private _handlerFinalizedEvent: TypedEvent<this, FinalizableEventHandlerRef<TSender, TArgs>> = new TypedEvent();
 
+	/**
+	 * An event that is raised after a handler has been reclaimed by GC and had its
+	 * finalizer run
+	 *
+	 * @description One possible use for this event is as as diagnostic tool to determine whether event handler leaks
+	 * exist
+	 *
+	 * @type {ITypedEvent<this, FinalizableEventHandlerRef<TSender, TArgs>>}
+	 * @memberof WeakEvent
+	 */
 	public handlerFinalizedEvent: ITypedEvent<this, FinalizableEventHandlerRef<TSender, TArgs>> = this._handlerFinalizedEvent;
 
 	public constructor() {
