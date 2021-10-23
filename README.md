@@ -33,13 +33,36 @@ Usage of weak references in such cases may help prevent hard to detect event han
 
 Please note that this package is __unbundled__
 
+
+</br>
+
+## Efficiency
+
+Estimated efficiency values of package code. </br>
+
+Note that ECMA does not specify any complexity constraints for array functions
+so actual complexity may vary.
+
+| Function                  | Average Time  | Average Space |
+|---------------------------|---------------|---------------|
+| `ITypedEvent.attach`      | O(1)          |  O(1)         |
+| `ITypedEvent.detach`      | O(n)          |  O(1)         |
+| `ITypedEvent.invoke`      | O(n)          |  O(1)         |
+| `ITypedEvent.invokeAsync` | O(n)          |  O(n)         |
+
 </br>
 
 ## Other notes
 
-Code documentation is in progress.</br>
-Feel free to hit me on my mail at [yuval.pomer](mailto:yuval.pomer@protonmail.com?subject=[Weak-Event%20Feedback]) let me know if you find a bug, have a suggestion or simply liked the package.
+For any bugs, questions or suggestions or comments, feel free to hit me on my mail at [yuval.pomer](mailto:yuval.pomer@protonmail.com?subject=[Weak-Event%20Feedback])
 
+Feedback, positive or otherwise is appreciated.
+
+</br>
+
+For more reading material regarding the necessity and/or potential use-cases of the 'Weak Event' pattern in general, please refer to:
+* https://v8.dev/features/weak-references
+* https://docs.microsoft.com/en-us/dotnet/desktop/wpf/advanced/weak-event-patterns
 
 </br>
 
@@ -165,3 +188,7 @@ class DummyEventConsumer {
 
 ```
 <br />
+
+## Changelog
+
+Changelog may be found at the project's GitHub [here](https://github.com/yuval-po/weak-event/blob/main/CHANGELOG.md)
