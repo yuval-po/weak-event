@@ -22,14 +22,14 @@ const DEFAULT_INVOCATION_OPTS: EventInvocationOpts = {
  */
 export class TypedEvent<TSender, TArgs> implements IEventSource<TSender, TArgs> {
 
-	protected _handlers: Set<TypedEventHandler<TSender, TArgs>> = new Set<TypedEventHandler<TSender, TArgs>>();
+	protected _handlers: TypedEventHandler<TSender, TArgs>[] = [];
 
 	public attach(handler: TypedEventHandler<TSender, TArgs>): void {
-		this._handlers.add(handler);
+		this._handlers.push(handler);
 	}
 
 	public detach(handler: TypedEventHandler<TSender, TArgs>): void {
-		this._handlers.delete(handler);
+		this.tryRemoveHandler(handler);
 	}
 
 	public invoke(sender: TSender, args: TArgs, options: EventInvocationOpts = DEFAULT_INVOCATION_OPTS): void {
@@ -38,5 +38,12 @@ export class TypedEvent<TSender, TArgs> implements IEventSource<TSender, TArgs> 
 
 	public async invokeAsync(sender: TSender, args: TArgs, options: EventInvocationOpts = DEFAULT_INVOCATION_OPTS): Promise<void> {
 		await invokeEventHandlersAsync(this._handlers, sender, args, options);
+	}
+
+	private tryRemoveHandler(handlerToRemove: TypedEventHandler<TSender, TArgs>): void {
+		const handlerIdx = this._handlers.findIndex((handler) => handler === handlerToRemove);
+		if (handlerIdx >= 0) {
+			this._handlers.splice(handlerIdx, 1);
+		}
 	}
 }
