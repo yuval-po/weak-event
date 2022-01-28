@@ -54,7 +54,7 @@ so actual complexity may vary.
 
 ## Other notes
 
-For any bugs, questions or suggestions or comments, feel free to hit me on my mail at [yuval.pomer](mailto:yuval.pomer@protonmail.com?subject=[Weak-Event%20Feedback])
+For any bugs, questions, suggestions or comments, feel free to hit me on my mail at [yuval.pomer](mailto:yuval.pomer@protonmail.com?subject=[Weak-Event%20Feedback])
 
 Feedback, positive or otherwise is appreciated.
 
